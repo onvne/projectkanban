@@ -1,12 +1,15 @@
 # app/models/user.rb
 class User < ApplicationRecord
+  devise :database_authenticatable, :registerable,
+       :recoverable, :rememberable, :validatable
   has_many :projects, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 100 }
   validates :email, presence: true,
                     uniqueness: true,
                     format: { with: URI::MailTo::EMAIL_REGEXP }
-  validates :hash_password, presence: true, length: { minimum: 60 }
+  # временная мера, пока все режиме тестирования РАСКОМЕНТИТЬ
+  # validates :hash_password, presence: true, length: { minimum: 60 }
 
   before_create :set_create_time
   before_save :update_last_activity
