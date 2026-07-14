@@ -11,6 +11,8 @@ gem "sqlite3", ">= 2.1"
 gem "puma", ">= 5.0"
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
+# hotwire-rails is a gem that integrates Hotwire into Rails applications, providing tools for building modern, reactive web applications without needing to write much JavaScript. It includes Turbo and Stimulus, which are part of the Hotwire framework.
+gem "hotwire-rails"
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem "turbo-rails"
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
