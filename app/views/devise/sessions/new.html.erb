@@ -1,26 +1,51 @@
-<h2>Log in</h2>
+<div class="auth-wrapper">
+  <%= turbo_frame_tag "auth_card" do %>
+    <div class="auth-card">
+      
+      <div class="auth-header">
+        <div class="auth-logo">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="24" height="24" rx="6" fill="#6d5dfc"/>
+            <path d="M7 7H11V11H7V7Z" fill="white" opacity="0.6"/>
+            <path d="M13 7H17V17H13V7Z" fill="white"/>
+            <path d="M7 13H11V17H7V13Z" fill="white" opacity="0.8"/>
+          </svg>
+        </div>
+        <h2 class="auth-title">Welcome back</h2>
+        <p class="auth-subtitle">Log in to your workspace</p>
+      </div>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <p><%= f.label :email %></p>
-    <p><%= f.email_field :email, autofocus: true, autocomplete: "email" %></p>
-  </div>
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "auth-form", data: { turbo: true } }) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <p><%= f.label :password %></p>
-    <p><%= f.password_field :password, autocomplete: "current-password" %></p>
-  </div>
+        <div class="field">
+          <%= f.label :email %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "name@company.com" %>
+        </div>
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <p><%= f.check_box :remember_me %></p>
-      <p><%= f.label :remember_me %></p>
+        <div class="field">
+          <%= f.label :password %>
+          <%= f.password_field :password, autocomplete: "current-password", placeholder: "••••••••" %>
+        </div>
+
+        <% if devise_mapping.rememberable? %>
+          <div class="checkbox-field">
+            <%= f.check_box :remember_me %>
+            <%= f.label :remember_me %>
+          </div>
+        <% end %>
+
+        <div class="actions">
+          <%= f.submit "Log in", class: "auth-btn-submit" %>
+        </div>
+      <% end %>
+
+      <div class="auth-footer">
+        <div class="auth-secondary-links">
+          <%= render "devise/shared/links" %>
+        </div>
+      </div>
+
     </div>
   <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>

@@ -8,3 +8,257 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+/* Kanvas Devise Theme Variables */
+:root {
+  --kv-bg-main: #0b0c10;
+  --kv-bg-card: #12131a;
+  --kv-bg-input: #161720;
+  --kv-border: #20222e;
+  --kv-text-primary: #ffffff;
+  --kv-text-muted: #8f95b2;
+  --kv-accent: #6d5dfc;
+  --kv-accent-hover: #5849df;
+  --kv-error: #ff4a5a;
+}
+
+/* Auth Layout Container */
+.auth-wrapper {
+  background-color: var(--kv-bg-main);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  padding: 20px;
+}
+
+.auth-card {
+  background-color: var(--kv-bg-card);
+  border: 1px solid var(--kv-border);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 420px;
+  padding: 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Header & Logo */
+.auth-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.auth-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  color: var(--kv-text-primary);
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+}
+
+.auth-logo svg {
+  width: 32px;
+  height: 32px;
+}
+
+.auth-title {
+  color: var(--kv-text-primary);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+}
+
+.auth-subtitle {
+  color: var(--kv-text-muted);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+/* Forms & Inputs */
+.auth-form .field {
+  margin-bottom: 20px;
+}
+
+.auth-form label {
+  display: block;
+  color: var(--kv-text-muted);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.auth-form input[type="email"],
+.auth-form input[type="password"],
+.auth-form input[type="text"] {
+  width: 100%;
+  padding: 12px 16px;
+  background-color: var(--kv-bg-input);
+  border: 1px solid var(--kv-border);
+  border-radius: 8px;
+  color: var(--kv-text-primary);
+  font-size: 0.9375rem;
+  box-sizing: border-box;
+  transition: all 0.2s ease-in-out;
+}
+
+.auth-form input:focus {
+  outline: none;
+  border-color: var(--kv-accent);
+  box-shadow: 0 0 0 3px rgba(109, 93, 252, 0.15);
+}
+
+/* Checkbox Alignment */
+.auth-form .checkbox-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.auth-form .checkbox-field input[type="checkbox"] {
+  accent-color: var(--kv-accent);
+  width: 16px;
+  height: 16px;
+}
+
+.auth-form .checkbox-field label {
+  margin-bottom: 0;
+  text-transform: none;
+  font-size: 0.875rem;
+}
+
+/* Buttons */
+.auth-btn-submit {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--kv-accent);
+  color: var(--kv-text-primary);
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.auth-btn-submit:hover {
+  background-color: var(--kv-accent-hover);
+}
+
+/* Links & Footers */
+.auth-footer {
+  margin-top: 24px;
+  text-align: center;
+  border-top: 1px solid var(--kv-border);
+  padding-top: 20px;
+}
+
+.auth-link {
+  color: var(--kv-accent);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.15s ease;
+}
+
+.auth-link:hover {
+  color: var(--kv-text-primary);
+  text-decoration: underline;
+}
+
+.auth-secondary-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Error Messages Styling */
+#error_explanation {
+  background-color: rgba(255, 74, 90, 0.1);
+  border: 1px solid var(--kv-error);
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  color: var(--kv-error);
+  font-size: 0.875rem;
+}
+
+#error_explanation h2 {
+  font-size: 0.9rem;
+  margin: 0 0 6px 0;
+  font-weight: 600;
+}
+
+#error_explanation ul {
+  margin: 0;
+  padding-left: 16px;
+}
+/* Добавьте в application.css или отдельный файл */
+
+.kanban-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.kanban-column {
+  background: #f5f6fa;
+  border-radius: 12px;
+  padding: 16px;
+  min-height: 400px;
+}
+
+.kanban-column h3 {
+  margin-top: 0;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e1e4e8;
+  color: #24292e;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.task-card {
+  background: white;
+  padding: 14px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  cursor: grab;
+  transition: all 0.2s;
+}
+
+.task-card:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  transform: translateY(-2px);
+}
+
+.task-card h4 {
+  margin: 0 0 6px 0;
+  color: #24292e;
+}
+
+.task-card p {
+  margin: 0;
+  color: #586069;
+  font-size: 0.875rem;
+}
+
+/* Drag & Drop стили */
+.task-card.dragging {
+  opacity: 0.5;
+  transform: scale(0.95);
+}
+
+.kanban-column.drag-over {
+  background: #e8f0fe;
+  border: 2px dashed #6d5dfc;
+}
