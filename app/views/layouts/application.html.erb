@@ -1,29 +1,54 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Projectkanban" %></title>
+    <title>Kanvas</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Projectkanban">
-    <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= yield :head %>
-
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
-
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <%= yield %>
+    <% if user_signed_in? %>
+      <div class="kv-app-layout">
+        <%= render "layouts/sidebar" %>
+        
+        <main class="kv-main-content">
+          <%= yield %>
+        </main>
+      </div>
+
+      <dialog id="project-modal" class="kv-modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2>Create New Project</h2>
+            <p>Give your project a clear name to start organizing tasks.</p>
+          </div>
+
+          <%= form_with(model: Project.new, url: projects_path, local: true, class: "auth-form") do |f| %>
+            
+            <div class="field">
+              <%= f.label :title, "Project Title" %>
+              <%= f.text_field :title, placeholder: "e.g., Mobile App, Website Redesign...", required: true %>
+            </div>
+
+            <div class="field">
+              <%= f.label :description, "Description (Optional)" %>
+              <%= f.text_area :description, placeholder: "Describe the goals, links, or notes for this project...", rows: 4 %>
+            </div>
+
+            <div class="modal-actions">
+              <button type="button" class="btn-cancel" onclick="document.getElementById('project-modal').close()">Cancel</button>
+              <%= f.submit "Create Project", class: "auth-btn-submit" %>
+            </div>
+          <% end %>
+        </div>
+      </dialog>
+
+    <% else %>
+      <%= yield %>
+    <% end %>
   </body>
 </html>

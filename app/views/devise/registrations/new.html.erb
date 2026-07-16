@@ -1,7 +1,6 @@
 <div class="auth-wrapper">
   <%= turbo_frame_tag "auth_card" do %>
     <div class="auth-card">
-      
       <div class="auth-header">
         <div class="auth-logo">
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -11,12 +10,17 @@
             <path d="M7 13H11V17H7V13Z" fill="white" opacity="0.8"/>
           </svg>
         </div>
-        <h2 class="auth-title">Welcome back</h2>
-        <p class="auth-subtitle">Log in to your workspace</p>
+        <h2 class="auth-title">Create your account</h2>
+        <p class="auth-subtitle">Start organizing your work in minutes</p>
       </div>
 
-      <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "auth-form", data: { turbo: false } }) do |f| %>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "auth-form", data: { turbo: false } }) do |f| %>
         <%= render "devise/shared/error_messages", resource: resource %>
+       
+        <div class="field">
+          <%= f.label :name %>
+          <%= f.text_field :name, autofocus: true, placeholder: "John Doe", required: true %>
+        </div>
 
         <div class="field">
           <%= f.label :email %>
@@ -25,18 +29,19 @@
 
         <div class="field">
           <%= f.label :password %>
-          <%= f.password_field :password, autocomplete: "current-password", placeholder: "••••••••" %>
+          <% if @minimum_password_length %>
+            <p><em>(<%= @minimum_password_length %> characters minimum)</em></p>
+          <% end %>
+          <%= f.password_field :password, autocomplete: "new-password", placeholder: "••••••••" %>
         </div>
 
-        <% if devise_mapping.rememberable? %>
-          <div class="checkbox-field">
-            <%= f.check_box :remember_me %>
-            <%= f.label :remember_me %>
-          </div>
-        <% end %>
+        <div class="field">
+          <%= f.label :password_confirmation %>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "••••••••" %>
+        </div>
 
         <div class="actions">
-          <%= f.submit "Log in", class: "auth-btn-submit" %>
+          <%= f.submit "Sign up", class: "auth-btn-submit" %>
         </div>
       <% end %>
 
@@ -45,7 +50,6 @@
           <%= render "devise/shared/links" %>
         </div>
       </div>
-
     </div>
   <% end %>
 </div>
