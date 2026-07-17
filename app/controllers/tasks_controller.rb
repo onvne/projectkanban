@@ -11,10 +11,15 @@ class TasksController < ApplicationController
   before_action :set_task, only: [ :move_forward, :move_backward, :edit, :update, :destroy ]
 
   def index
-    if params[:project_id]
-      @project = current_user.projects.find(params[:project_id])
-      @tasks = @project.tasks
-      @board_title = @project.title
+    if params[:project_id].present?
+      @project = current_user.projects.find_by(id: params[:project_id])
+
+      if @project
+        @tasks = @project.tasks
+        @board_title = @project.title
+      else
+        redirect_to root_path, alert: "Project not found or access denied." and return
+      end
     else
       @project = nil
       @tasks = Task.where(project_id: @projects.pluck(:id))
@@ -45,6 +50,10 @@ class TasksController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
+
+   def new
+    @task = @project.tasks.new
+   end
 
   def edit
   end
@@ -79,7 +88,11 @@ class TasksController < ApplicationController
   end
 
   def set_project
-    @project = current_user.projects.find(params[:project_id])
+    @project = current_user.projects.find_by(id: params[:project_id])
+
+    return if @project
+
+    redirect_to root_path, alert: "Project not found or access denied." and return
   end
 
   def set_task

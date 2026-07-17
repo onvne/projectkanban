@@ -80,6 +80,15 @@ class TasksControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Task not found or access denied.", flash[:alert]
   end
 
+  test "should redirect when project was deleted" do
+    @project.destroy
+
+    get project_tasks_url(@project)
+
+    assert_redirected_to root_path
+    assert_equal "Project not found or access denied.", flash[:alert]
+  end
+
   test "requires authentication" do
     sign_out @user
 
