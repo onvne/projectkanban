@@ -1,17 +1,12 @@
 <%= turbo_frame_tag "modal_frame" do %>
   <div class="modal-content">
-    
-    <%# Шапка модалки %>
     <div class="modal-header">
       <h3 class="modal-title">Редактирование задачи</h3>
-      <%# Находим ближайший диалог (тот, что в макете) и закрываем его %>
       <button type="button" class="close-btn" onclick="this.closest('dialog').close();">✕</button>
     </div>
 
-    <%# Тело модалки %>
     <div class="modal-body">
       <%= form_with(model: @task, class: "task-edit-form") do |f| %>
-        
         <div class="form-field">
           <%= f.label :title, "Название задачи" %>
           <%= f.text_field :title, class: "form-input", placeholder: "Что нужно сделать?", required: true %>
@@ -24,10 +19,9 @@
 
         <div class="form-field">
           <%= f.label :status, "Статус (Этап)" %>
-          <%# Текущий статус + только разрешенные переходы из твоей модели %>
-          <%= f.select :status, 
-                       [[@task.status.titleize, @task.status]] + @task.allowed_transitions_for_select, 
-                       {}, 
+          <%= f.select :status,
+                       [[@task.status.titleize, @task.status]] + @task.allowed_transitions_for_select,
+                       {},
                        { class: "form-select" } %>
         </div>
 
@@ -38,24 +32,14 @@
 
       <hr class="modal-divider">
 
-      <%# Кнопка удаления %>
       <div class="delete-action-wrapper">
-        <%= button_to "Удалить задачу", task_path(@task), 
-                      method: :delete, 
-                      class: "btn-delete", 
+        <%= button_to "Удалить задачу", task_path(@task),
+                      method: :delete,
+                      class: "btn-delete",
                       form: { data: { turbo_confirm: "Вы действительно хотите безвозвратно удалить эту задачу?" } } %>
       </div>
     </div>
-
   </div>
 
-  <%# ЭТОТ СКРИПТ АВТОМАТИЧЕСКИ ДАСТ ПИНОК ДИАЛОГУ НА ОТКРЫТИЕ %>
-  <script>
-    {
-      const dialog = document.getElementById('modal');
-      if (dialog && !dialog.open) {
-        dialog.showModal();
-      }
-    }
-  </script>
+  <%= render "shared/open_modal_script" %>
 <% end %>

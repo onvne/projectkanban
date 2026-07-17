@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Kanvas</title>
+    <title>Todoshka</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -9,13 +9,11 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-<!-- Контейнер для модалки -->
 <dialog id="modal" class="task-dialog" onclose="this.querySelector('turbo-frame').innerHTML = ''">
   <%= turbo_frame_tag "modal_frame" %>
 </dialog>
 
 <script>
-  // Простой скрипт, чтобы при клике на esc закрывался диалог
   const modal = document.getElementById("modal");
   modal.addEventListener("close", () => {
     modal.querySelector("turbo-frame").innerHTML = "";

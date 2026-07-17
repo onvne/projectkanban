@@ -1,13 +1,17 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  title: MyString
-  description: MyText
-  status: MyString
+  title: Todo task
+  description: Task description
+  status: todo
   project: one
 
 two:
-  title: MyString
-  description: MyText
-  status: MyString
+  title: In progress task
+  description: Another task
+  status: in_progress
+  project: one
+
+three:
+  title: Other user task
+  description: Belongs to user two
+  status: todo
   project: two

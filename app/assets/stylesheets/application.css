@@ -750,6 +750,33 @@ html, body {
   background-color: var(--kv-accent-hover);
 }
 
+.board-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-delete-project {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: transparent;
+  color: var(--kv-error);
+  border: 1px solid rgba(255, 74, 90, 0.3);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-delete-project:hover {
+  background-color: rgba(255, 74, 90, 0.1);
+  border-color: var(--kv-error);
+}
+
 /* ==========================================================================
    КАНБАН-ДОСКА (5 СТИЛЬНЫХ КОЛОНОК)
    ========================================================================== */

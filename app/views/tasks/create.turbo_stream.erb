@@ -1,16 +1,7 @@
-
 <%= turbo_stream.append "modal" do %>
-  <script>
-    {
-      const modal = document.getElementById('modal');
-      if (modal && modal.open) {
-        modal.close();
-      }
-    }
-  </script>
+  <%= render "shared/close_modal_script" %>
 <% end %>
 
-
-<%= turbo_stream.append_all "[data-status='#{@task.status}']", 
-                            partial: "tasks/task", 
+<%= turbo_stream.append_all "[data-status='#{@task.status}']",
+                            partial: "tasks/task",
                             locals: { task: @task } %>

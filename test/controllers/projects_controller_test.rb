@@ -1,38 +1,62 @@
 require "test_helper"
 
 class ProjectsControllerTest < ActionDispatch::IntegrationTest
-  test "should get index" do
-    get projects_index_url
-    assert_response :success
+  setup do
+    @user = users(:one)
+    @project = projects(:one)
+    sign_in @user
   end
 
   test "should get new" do
-    get projects_new_url
+    get new_project_url
     assert_response :success
   end
 
-  test "should get create" do
-    get projects_create_url
-    assert_response :success
+  test "should create project" do
+    assert_difference -> { @user.projects.count }, 1 do
+      post projects_url, params: {
+        project: { title: "New Project", description: "Description" }
+      }
+    end
+
+    assert_redirected_to root_path
+    assert_equal "Project 'New Project' was successfully created.", flash[:notice]
   end
 
-  test "should get edit" do
-    get projects_edit_url
-    assert_response :success
+  test "should not create project with blank title" do
+    assert_no_difference -> { @user.projects.count } do
+      post projects_url, params: { project: { title: "", description: "Description" } }
+    end
+
+    assert_redirected_to root_path
+    assert flash[:alert].present?
   end
 
-  test "should get update" do
-    get projects_update_url
-    assert_response :success
+  test "should destroy own project" do
+    assert_difference -> { Project.count }, -1 do
+      assert_difference -> { Task.count }, -2 do
+        delete project_url(@project)
+      end
+    end
+
+    assert_redirected_to root_path
+    assert_equal "Project 'First Project' was deleted.", flash[:notice]
   end
 
-  test "should get destroy" do
-    get projects_destroy_url
-    assert_response :success
+  test "should not destroy another users project" do
+    other_project = projects(:two)
+
+    assert_no_difference -> { Project.count } do
+      delete project_url(other_project)
+    end
+
+    assert_response :not_found
   end
 
-  test "should get show" do
-    get projects_show_url
-    assert_response :success
+  test "requires authentication" do
+    sign_out @user
+
+    delete project_url(@project)
+    assert_redirected_to new_user_session_path
   end
 end

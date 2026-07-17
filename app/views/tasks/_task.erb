@@ -1,6 +1,4 @@
 <div class="kanban-card" id="<%= dom_id(task) %>">
-  
-  <% # Маленькая кнопка редактирования в углу %>
   <%= link_to edit_task_path(task), data: { turbo_frame: "modal_frame" }, class: "edit-button-class" do %>
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
@@ -8,9 +6,7 @@
     </svg>
   <% end %>
 
-  <div class="card-tags-row">
-    <!-- Сюда в будущем можно выводить теги (например, AUTH, UX) -->
-  </div>
+  <div class="card-tags-row"></div>
 
   <div class="card-body">
     <h4 class="card-title"><%= task.title %></h4>
@@ -46,11 +42,9 @@
     </div>
   </div>
 
-  <div class="card-footer-row">
-  </div>
+  <div class="card-footer-row"></div>
 
   <div class="card-transitions">
-    <%# Кнопка НАЗАД %>
     <% if task.can_move_backward? %>
       <%= button_to move_backward_task_path(task), method: :patch, class: "transition-arrow-btn" do %>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -59,7 +53,6 @@
       <% end %>
     <% end %>
 
-    <%# Кнопка ВПЕРЕД %>
     <% if task.can_move_forward? %>
       <%= button_to move_forward_task_path(task), method: :patch, class: "transition-arrow-btn" do %>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -68,5 +61,4 @@
       <% end %>
     <% end %>
   </div>
-
 </div>

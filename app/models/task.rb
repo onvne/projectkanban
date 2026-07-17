@@ -9,7 +9,6 @@ class Task < ApplicationRecord
     rejected: "rejected"
   }, default: :todo
 
-  # 1. The Global Rules (For the Dropdown and Validation)
   ALLOWED_TRANSITIONS = {
     "todo" => [ "in_progress" ],
     "in_progress" => [ "in_testing", "todo" ],
@@ -18,7 +17,6 @@ class Task < ApplicationRecord
     "rejected" => [ "in_progress" ]
   }.freeze
 
-  # 2. Arrow Maps: Defines exactly what "Next" and "Previous" mean for each state
   NEXT_STATUS_MAP = {
     "todo" => "in_progress",
     "in_progress" => "in_testing",
@@ -31,28 +29,16 @@ class Task < ApplicationRecord
     "in_testing" => "rejected"
   }.freeze
 
-  # Validations
   validates :title, presence: true, length: { maximum: 100 }
   validate :valid_status_transition, if: :status_changed?
 
-  # ==========================================
-  # Dropdown Helpers
-  # ==========================================
-
-  # Returns raw strings of allowed target statuses: e.g., ["in_testing", "todo"]
   def allowed_transitions
     ALLOWED_TRANSITIONS[status] || []
   end
 
-  # Formats the allowed statuses for a standard Rails form dropdown select
-  # e.g., [["In Testing", "in_testing"], ["To Do", "todo"]]
   def allowed_transitions_for_select
     allowed_transitions.map { |state| [ state.titleize, state ] }
   end
-
-  # ==========================================
-  # Arrow Button Helpers
-  # ==========================================
 
   def can_move_forward?
     NEXT_STATUS_MAP.key?(status)
@@ -79,7 +65,6 @@ class Task < ApplicationRecord
 
     old_status = status_was
     new_status = status
-
     allowed_next_states = ALLOWED_TRANSITIONS[old_status] || []
 
     unless allowed_next_states.include?(new_status)

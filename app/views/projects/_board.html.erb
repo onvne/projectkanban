@@ -27,6 +27,17 @@
             </svg>
             <span>New Task</span>
           <% end %>
+
+          <%= button_to project_path(project),
+                        method: :delete,
+                        class: "btn-delete-project",
+                        form: { data: { turbo_confirm: "Delete project \"#{project.title}\" and all its tasks?" } } do %>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            </svg>
+            <span>Delete Project</span>
+          <% end %>
         <% end %>
       </div>
     </header>

@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  # 1. Вложенные роуты только для создания задач
   resources :projects, only: [ :new, :create, :edit, :update, :destroy ] do
     resources :tasks, only: [ :index, :new, :create, :edit, :update, :destroy ]
   end
@@ -10,7 +9,6 @@ Rails.application.routes.draw do
 
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # 2. Плоские роуты для ВСЕХ остальных действий с задачами
   resources :tasks, only: [ :index, :edit, :update, :destroy ] do
     member do
       patch :move_forward

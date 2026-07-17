@@ -1,7 +1,5 @@
-# app/controllers/projects_controller.rb
 class ProjectsController < ApplicationController
-  before_action :authenticate_user!
-  # Мы удалили before_action :set_projects, так как метод теперь в родительском классе!
+  before_action :set_project, only: [ :edit, :update, :destroy ]
 
   def index
   end
@@ -26,9 +24,16 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
+    title = @project.title
+    @project.destroy
+    redirect_to root_path, notice: "Project '#{title}' was deleted."
   end
 
   private
+
+  def set_project
+    @project = current_user.projects.find(params[:id])
+  end
 
   def project_params
     params.require(:project).permit(:title, :description)
