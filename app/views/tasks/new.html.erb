@@ -1,2 +1,43 @@
-<h1>Новая задача</h1>
-<%= render "form" %>
+<%= turbo_frame_tag "modal_frame" do %>
+  <div class="modal-content">
+    
+  
+    <div class="modal-header">
+      <h3 class="modal-title">Создать новую задачу</h3>
+      <button type="button" class="close-btn" onclick="this.closest('dialog').close();">✕</button>
+    </div>
+
+    <%  %>
+    <div class="modal-body">
+      <%= form_with(model: [@project, @task], class: "task-edit-form") do |f| %>
+        
+        <%= f.hidden_field :status %>
+        
+        <div class="form-field">
+          <%= f.label :title, "Название задачи" %>
+          <%= f.text_field :title, class: "form-input", placeholder: "Что нужно сделать?", required: true %>
+        </div>
+
+        <div class="form-field">
+          <%= f.label :description, "Описание" %>
+          <%= f.text_area :description, class: "form-input", placeholder: "Добавьте деталей...", rows: 4 %>
+        </div>
+
+        <div class="form-buttons">
+          <%= f.submit "Создать задачу", class: "btn-save" %>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+
+  <%  %>
+  <script>
+    {
+      const dialog = document.getElementById('modal');
+      if (dialog && !dialog.open) {
+        dialog.showModal();
+      }
+    }
+  </script>
+<% end %>

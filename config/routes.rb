@@ -1,22 +1,22 @@
 Rails.application.routes.draw do
-  resources :projects do
-    resources :tasks, only: [ :new, :create, :edit, :update, :destroy ]
+  # 1. Вложенные роуты только для создания задач
+  resources :projects, only: [ :new, :create, :edit, :update, :destroy ] do
+    resources :tasks, only: [ :index, :new, :create, :edit, :update, :destroy ]
   end
 
   devise_for :users, controllers: {
     registrations: "registrations"
   }
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
+  # 2. Плоские роуты для ВСЕХ остальных действий с задачами
+  resources :tasks, only: [ :index, :edit, :update, :destroy ] do
+    member do
+      patch :move_forward
+      patch :move_backward
+    end
+  end
 
-  # Defines the root path route ("/")
-  # root "posts#index"
-  root "projects#index"
+  root "tasks#index"
 end

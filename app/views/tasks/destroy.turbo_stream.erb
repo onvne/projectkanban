@@ -1,0 +1,14 @@
+
+<%= turbo_stream.remove dom_id(@task) %>
+
+
+<%= turbo_stream.append "modal" do %>
+  <script>
+    {
+      const modal = document.getElementById('modal');
+      if (modal && modal.open) {
+        modal.close();
+      }
+    }
+  </script>
+<% end %>

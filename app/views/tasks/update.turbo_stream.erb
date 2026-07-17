@@ -1,0 +1,9 @@
+
+<%= turbo_stream.remove "modal" %>
+
+<% if @task.saved_change_to_status? %>
+  <%= turbo_stream.remove dom_id(@task) %>
+  <%= turbo_stream.append "column-#{@task.status}", partial: "tasks/task", locals: { task: @task } %>
+<% else %>
+  <%= turbo_stream.replace dom_id(@task), partial: "tasks/task", locals: { task: @task } %>
+<% end %>   

@@ -465,7 +465,30 @@ html, body {
   align-items: center;
   gap: 10px;
 }
+/* 1. Делаем формы кнопок прозрачными */
+.card-transitions form {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+}
 
+/* 2. Убираем рамки у самой кнопки */
+.transition-arrow-btn {
+  background: transparent !important;
+  border: none !important;
+  padding: 4px;
+  cursor: pointer;
+  color: inherit; /* наследует цвет текста */
+}
+
+/* 3. Убираем любые лишние отступы в footer */
+.card-footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .profile-avatar {
   width: 36px;
   height: 36px;
@@ -656,4 +679,746 @@ html, body {
   width: auto; /* Отменяем растягивание на 100% */
   padding: 10px 20px;
   font-size: 0.9rem;
+}
+/* ==========================================================================
+   ВЕРХНИЙ БАР (HEADER-BAR)
+   ========================================================================== */
+.board-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.board-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 32px;
+  border-bottom: 1px solid var(--kv-border);
+  background-color: var(--kv-bg-main);
+}
+
+.board-info {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.board-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--kv-text-primary);
+  margin: 0;
+}
+
+.board-stats {
+  display: flex;
+  gap: 12px;
+  font-size: 0.8125rem;
+}
+
+.stat-item {
+  color: var(--kv-text-muted);
+}
+
+.stat-item strong {
+  color: var(--kv-text-primary);
+}
+
+.stat-item.done strong { color: #10b981; }
+.stat-item.progress strong { color: #f59e0b; }
+
+/* Кнопка создания задачи */
+.btn-new-task {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--kv-accent);
+  color: var(--kv-text-primary);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.btn-new-task:hover {
+  background-color: var(--kv-accent-hover);
+}
+
+/* ==========================================================================
+   КАНБАН-ДОСКА (5 СТИЛЬНЫХ КОЛОНОК)
+   ========================================================================== */
+.kanban-board-container {
+  flex: 1;
+  overflow-x: auto; /* Скролл по горизонтали при малом разрешении */
+  padding: 24px 32px;
+  background-color: var(--kv-bg-main);
+}
+
+.kanban-board {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 0;
+  /* Главное: разрешаем контейнеру быть шире экрана, чтобы сработал скролл */
+  min-width: max-content; 
+}
+
+.kanban-column {
+  width: 300px;       
+  flex-shrink: 0;      
+  background-color: var(--kv-bg-card);
+  border: 1px solid var(--kv-border);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.column-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.column-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.column-header h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--kv-text-primary);
+  margin: 0;
+}
+
+.column-count {
+  background-color: rgba(255, 255, 255, 0.06);
+  color: var(--kv-text-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+/* Цветные точки статусов */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.status-dot.gray { background-color: var(--kv-text-muted); }
+.status-dot.orange { background-color: #f59e0b; }
+.status-dot.blue { background-color: #3b82f6; }
+.status-dot.red { background-color: var(--kv-error); }
+.status-dot.green { background-color: #10b981; }
+
+.btn-add-to-column {
+  background: transparent;
+  border: none;
+  color: var(--kv-text-muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  transition: all 0.15s ease;
+  text-decoration: none;
+}
+
+.btn-add-to-column:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--kv-text-primary);
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 150px;
+}
+
+/* Заглушка, если задач еще нет */
+.empty-column-placeholder {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.12);
+  font-size: 0.8125rem;
+  padding: 24px 0;
+  border: 1px dashed rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  user-select: none;
+}
+/* 1. Главный контейнер доски */
+.board-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 24px;
+  box-sizing: border-box;
+  background-color: #0b0c10; /* Глубокий темный фон всей страницы */
+  color: #f5f5f7;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* 2. Контейнер колонок — делаем его горизонтальным! */
+.board-columns-container {
+  display: flex ;         /* Включаем flex */
+  flex-direction: row ;   /* Заставляем идти в ряд */
+  align-items: flex-start ; /* Выравнивание по верху */
+  gap: 20px ;             /* Отступ между колонками */
+  width: 100%;                      /* Растягиваем на всю ширину */
+  flex-wrap: nowrap ;     /* Запрещаем перенос колонок вниз */
+}
+
+/* 3. Стилизация отдельной колонки */
+.board-column {
+  flex: 0 0 280px; /* Колонки не сжимаются и имеют фиксированную ширину 280px */
+  width: 280px;
+  background-color: #12131a; /* Чуть светлее общего фона доски */
+  border: 1px solid #1e1f29;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap !important; 
+  max-height: calc(100vh - 160px); /* Чтобы колонка не уходила бесконечно вниз */
+}
+
+/* 4. Заголовок колонки */
+.column-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  border-bottom: 2px solid #1e1f29;
+  padding-bottom: 8px;
+}
+
+.column-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Индикатор количества задач в колонке */
+.tasks-count {
+  background-color: #1e1f29;
+  color: #8a8d9f;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+/* 5. Список задач внутри колонки */
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto; /* Если задач слишком много, они будут прокручиваться внутри колонки */
+  flex-grow: 1;
+  min-height: 100px; /* Чтобы пустая колонка имела высоту для перетаскивания */
+}
+
+/* Пустая заглушка "No tasks yet" с пунктирной рамкой */
+.no-tasks-placeholder {
+  border: 1.5px dashed #232433;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  color: #535661;
+  font-size: 13px;
+  background-color: rgba(25, 26, 35, 0.3);
+}
+
+/* 6. Карточка задачи (наш красивый темный дизайн) */
+.kanban-card {
+  position: relative;
+  width: 100%;
+  flex-shrink: 0; /* Не даем сжиматься */
+  box-sizing: border-box; /* Чтобы padding не ломал ширину */
+  background-color: #1a1b23; /* Темный фон карточки */
+  border: 1px solid #232433;
+  border-radius: 10px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform 0.2s, border-color 0.2s;
+  text-decoration: none;
+}
+
+.kanban-card:hover {
+  transform: translateY(-2px);
+  border-color: #3f4257;
+  cursor: pointer;
+}
+
+/* Текст карточки */
+.card-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #e4e4e7;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.card-description {
+  font-size: 12px;
+  color: #8a8d9f;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Теги и кнопки переходов */
+.card-tags {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.badge-project {
+  font-size: 10px;
+  font-weight: 600;
+  background-color: #262135; /* Приглушенный фиолетовый */
+  color: #a78bfa;
+  padding: 4px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.card-meta {
+  display: flex;
+  gap: 10px;
+  color: #535661;
+  font-size: 11px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Зеленые стрелочки быстрых переходов */
+.card-transitions {
+  display: flex;
+  gap: 6px;
+}
+
+.transition-arrow {
+  background: none;
+  border: 1px solid #132d21; /* Темно-зеленая граница */
+  background-color: #0c1f16;  /* Приглушенный зеленый фон */
+  color: #10b981;             /* Яркие неоново-зеленые стрелочки */
+  border-radius: 6px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  padding: 0;
+}
+
+.transition-arrow:hover {
+  background-color: #10b981;
+  color: #000000;
+  transform: scale(1.05);
+}
+
+.transition-arrow svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* --- СТИЛИ КАРТОЧКИ КАНБАНА --- */
+
+.kanban-card {
+  background-color: #12131a; /* Глубокий темный фон карточки */
+  border: 1px solid #1f202c; /* Тонкая темная обводка */
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  user-select: none;
+}
+
+/* Эффект парения при наведении */
+.kanban-card:hover {
+  transform: translateY(-2px);
+  border-color: #313348;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+/* 1. Ряд тегов */
+.card-tags-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* Округлые бейджи (тэги) */
+.tag-badge {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+/* Цвета для разных типов тегов в темной теме */
+.tag-badge.text-auth {
+  background-color: rgba(99, 102, 241, 0.15); /* Мягкий индиго */
+  color: #a5b4fc;
+}
+
+.tag-badge.text-ux {
+  background-color: rgba(168, 85, 247, 0.15); /* Мягкий фиолетовый */
+  color: #d8b4fe;
+}
+
+/* Кнопка быстрого перехода в карточку (карандаш) */
+.edit-card-btn {
+  color: #4b4f69;
+  display: flex;
+  align-items: center;
+  transition: color 0.15s ease;
+}
+
+.edit-card-btn:hover {
+  color: #9ea4c9;
+}
+
+/* 2. Контент карточки */
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.card-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #f5f5f7;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.card-description {
+  font-size: 12px;
+  color: #797d93;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* 3. Мета-строка (Приоритет и Календарь) */
+.card-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 12px;
+  color: #797d93;
+}
+
+.priority-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Точка приоритета */
+.priority-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.priority-high {
+  background-color: #f43f5e; /* Насыщенный красный цвет */
+  box-shadow: 0 0 8px rgba(244, 63, 94, 0.6);
+}
+
+.due-date-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.due-date-indicator svg {
+  color: #4b4f69;
+}
+
+/* 4. Подвал (Счетчики и зеленые стрелочки переходов) */
+.card-footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+  padding-top: 10px;
+  border-top: 1px solid #1c1d27;
+}
+
+.card-counters {
+  display: flex;
+  gap: 12px;
+  color: #4b4f69;
+  font-size: 11px;
+}
+
+.counter-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Секция с зелеными стрелками переходов */
+.card-transitions {
+  display: flex;
+  gap: 6px;
+}
+
+.transition-arrow-btn {
+  background: none;
+  border: 1px solid rgba(16, 185, 129, 0.2); /* Тонкая зеленая обводка */
+  background-color: rgba(16, 185, 129, 0.08); /* Приглушенный зеленый бэкграунд */
+  color: #10b981; /* Неоново-зеленый цвет стрелки */
+  border-radius: 6px;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+
+.transition-arrow-btn:hover {
+  background-color: #10b981;
+  color: #0b0c10;
+  border-color: #10b981;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+}
+/* Затемнение фона для dialog */
+.task-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.7); /* Темный полупрозрачный фон */
+  backdrop-filter: blur(4px);    /* Эффект размытия */
+}
+
+.task-dialog {
+  border: none;
+  border-radius: 12px;
+  background: #1a1c24; /* Цвет как на твоем скрине */
+  color: white;
+  padding: 20px;
+  width: 500px;
+}
+/* Убираем стандартные рамки и фон кнопок внутри карточки */
+.card-transitions form {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+.transition-arrow-btn {
+  background: none !important; /* Убирает серый фон */
+  border: none !important;     /* Убирает рамку */
+  padding: 4px;                /* Немного пространства для клика */
+  cursor: pointer;
+  color: #9ca3af;              /* Цвет иконки (стрелочки) */
+  transition: color 0.2s;
+}
+
+.transition-arrow-btn:hover {
+  color: #ffffff;              /* Цвет при наведении */
+}
+.edit-task-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: transparent;
+  border: none;
+  color: #5a607f; /* Неяркий цвет по умолчанию */
+  padding: 6px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 10; /* Кнопка всегда поверх остального контента */
+}
+.edit-task-btn:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #6d5dfc; /* Твой фиолетовый акцентный цвет */
+}
+/* --- СТИЛИ ДЛЯ МОДАЛЬНОГО ОКНА --- */
+.task-dialog {
+  border: 1px solid #1e1f29;
+  border-radius: 16px;
+  background-color: #12131a;
+  color: #f5f5f7;
+  padding: 0;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* Эффект размытия заднего фона (backdrop) */
+.task-modal::backdrop {
+  background-color: rgba(11, 12, 16, 0.8);
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  padding: 24px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  color: #5a607f;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.close-btn:hover {
+  color: #ff4a5a;
+}
+
+/* --- СТИЛИ ПОЛЕЙ ФОРМЫ --- */
+.task-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-field label {
+  font-size: 0.85rem;
+  color: #8f95b2;
+  font-weight: 500;
+}
+
+.form-input, .form-select {
+  background-color: #1a1b24;
+  border: 1px solid #2a2b36;
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: #f5f5f7;
+  font-family: inherit;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-input:focus, .form-select:focus {
+  border-color: #6d5dfc;
+}
+
+/* Настройка выпадающего списка */
+.form-select {
+  cursor: pointer;
+  appearance: none; /* Убираем стандартную стрелочку */
+  background-image: url("data:image/svg+xml;utf8,<svg fill='none' stroke='%238f95b2' stroke-width='2' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 16px;
+  padding-right: 40px;
+}
+
+/* --- КНОПКИ --- */
+.form-buttons {
+  margin-top: 8px;
+}
+
+.btn-save {
+  width: 100%;
+  background-color: #6d5dfc;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-save:hover {
+  background-color: #5b4ce3;
+}
+
+.modal-divider {
+  border: 0;
+  border-top: 1px solid #1e1f29;
+  margin: 20px 0;
+}
+
+.btn-delete {
+  width: 100%;
+  background-color: transparent;
+  color: #ff4a5a;
+  border: 1px solid rgba(255, 74, 90, 0.2);
+  border-radius: 8px;
+  padding: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-delete:hover {
+  background-color: rgba(255, 74, 90, 0.1);
+  border-color: #ff4a5a;
 }

@@ -1,20 +1,18 @@
-<%= form_with model: [@project, @task], local: true do |form| %>
+<%= form_with model: task, class: "task-form" do |f| %>
   <div class="field">
-    <%= form.label :title, "Заголовок" %>
-    <%= form.text_field :title, required: true %>
+    <%= f.label :title %>
+    <%= f.text_field :title, required: true %>
   </div>
 
   <div class="field">
-    <%= form.label :description, "Описание" %>
-    <%= form.text_area :description %>
+    <%= f.label :description %>
+    <%= f.text_area :description %>
   </div>
 
   <div class="field">
-    <%= form.label :status, "Статус" %>
-    <%= form.select :status, Task.statuses.keys.map { |status| [status.titleize, status] } %>
+    <%= f.label :status %>
+    <%= f.select :status, Task.statuses.keys.map { |s| [s.humanize, s] } %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <%= f.submit "Сохранить" %>
 <% end %>

@@ -1,6 +1,8 @@
+# app/controllers/projects_controller.rb
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_projects
+  # Мы удалили before_action :set_projects, так как метод теперь в родительском классе!
+
   def index
   end
 
@@ -16,6 +18,7 @@ class ProjectsController < ApplicationController
       redirect_to root_path, alert: "Failed to create project: #{@project.errors.full_messages.join(', ')}"
     end
   end
+
   def edit
   end
 
@@ -25,16 +28,7 @@ class ProjectsController < ApplicationController
   def destroy
   end
 
-  def show
-    @project = current_user.projects.find(params[:id])
-    @tasks = @project.tasks
-  rescue ActiveRecord::RecordNotFound
-    redirect_to root_path, alert: "Project not found."
-  end
-
-  def set_projects
-    @projects = current_user.projects
-  end
+  private
 
   def project_params
     params.require(:project).permit(:title, :description)

@@ -24,7 +24,7 @@
 
       <ul class="projects-list">
         <li class="project-item <%= 'active' if @project.nil? %>">
-          <%= link_to root_path, class: "project-link" do %>
+          <%= link_to root_path, class: "project-link", data: { turbo_frame: "board_frame", turbo_action: "advance" } do %>
             <span class="project-title-wrapper">
               <span class="project-icon">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
@@ -43,7 +43,7 @@
           <% color_class = dot_colors[index % dot_colors.length] %>
           
           <li class="project-item <%= active_class %>">
-            <%= link_to project_path(project), class: "project-link", data: { turbo_frame: "board_frame" } do %>
+            <%= link_to project_tasks_path(project), class: "project-link", data: { turbo_frame: "board_frame", turbo_action: "advance" } do %>
               <span class="project-title-wrapper">
                 <span class="project-dot dot-<%= color_class %>"></span>
                 <%= project.title %>

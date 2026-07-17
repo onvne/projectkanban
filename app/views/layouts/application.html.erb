@@ -9,7 +9,18 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
+<!-- Контейнер для модалки -->
+<dialog id="modal" class="task-dialog" onclose="this.querySelector('turbo-frame').innerHTML = ''">
+  <%= turbo_frame_tag "modal_frame" %>
+</dialog>
 
+<script>
+  // Простой скрипт, чтобы при клике на esc закрывался диалог
+  const modal = document.getElementById("modal");
+  modal.addEventListener("close", () => {
+    modal.querySelector("turbo-frame").innerHTML = "";
+  });
+</script>
   <body>
     <% if user_signed_in? %>
       <div class="kv-app-layout">
@@ -51,4 +62,5 @@
       <%= yield %>
     <% end %>
   </body>
+  
 </html>

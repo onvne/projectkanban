@@ -1,0 +1,61 @@
+<%= turbo_frame_tag "board_frame" do %>
+  <div class="board-wrapper">
+    
+    <header class="board-top-bar">
+      <div class="board-info">
+        <h1 class="board-title"><%= title %></h1>
+        
+        <div class="board-stats">
+          <% total_count = tasks.count %>
+          <% done_count = tasks.where(status: :done).count %>
+          <% in_progress_count = tasks.where(status: :in_progress).count %>
+          
+          <span class="stat-item done">
+            <strong><%= done_count %>/<%= total_count %></strong> done
+          </span>
+          <span class="stat-item progress">
+            <strong><%= in_progress_count %></strong> in progress
+          </span>
+        </div>
+      </div>
+
+      <div class="board-actions">
+        <% if project.present? %>
+          <%= link_to new_project_task_path(project), class: "btn-new-task", data: { turbo_frame: "modal_frame" } do %>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            <span>New Task</span>
+          <% end %>
+        <% end %>
+      </div>
+    </header>
+
+    <div class="board-columns-container">
+  <% @columns.each do |column| %>
+    <div class="board-column" id="column-<%= column[:status] %>">
+      
+      <div class="column-header">
+        <h3 class="column-title">
+          <%= column[:title] %>
+          <% col_tasks = @tasks_by_status[column[:status]] || [] %>
+          <span class="tasks-count"><%= col_tasks.size %></span>
+        </h3>
+      </div>
+
+      <div class="task-list">
+        <% if col_tasks.any? %>
+          <% col_tasks.each do |task| %>
+            <%= render task %>
+          <% end %>
+        <% else %>
+          <div class="no-tasks-placeholder">No tasks yet</div>
+        <% end %>
+      </div>
+
+    </div>
+  <% end %>
+</div>
+
+  </div>
+<% end %>
